@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        </div id="apresentacao">
+            <h1>Bem-vindo ao Sistema de Ponto Eletrônico!</h1>
+            <p>Aqui você pode gerenciar empresas, funcionários e monitorar os pontos de expediente.</p>
+        </div>
+    </div>
+</div>
+    {%include './partials/form_empresa.html'%}
+{% endblock %}

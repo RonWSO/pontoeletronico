@@ -1,0 +1,20 @@
+body {
+    font-size: 0.9rem;
+}
+
+.sidebar {
+    height: 100vh;
+    position: fixed;
+}
+
+main {
+    margin-left: 15px;
+    height: 100vh;
+}
+
+.nav-item{
+    background-color: gray;
+}
+.sidebar .nav-item:hover{
+    background-color: cadetblue;
+}

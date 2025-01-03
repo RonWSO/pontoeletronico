@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Gerenciamento{% endblock %}
+{% block head%}
+<link rel="stylesheet" href="{% static 'css/gerenciamento.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        </div id="apresentacao">
+            <h1>Bem-vindo ao Gerenciamento de empresas</h1>
+            <p>Aqui você pode cadastrar e gerenciar funcionários de uma empresa.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12 text-end">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EmpresaModal">
+                        Cadastro de Empresa
+                    </button>
+                </div>
+                <div style="margin-top:5px;">
+                    <form method="get" >
+                        <div class="input-group mb-3">
+                            <input type="text" id="searchInput" name="nome" class="form-control" placeholder="Pesquisar por nome de empresas">
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                        </div>
+                    </form>
+                </div>
+                    {% if empresas %}
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Endereço</th>
+                                <th>Telefone</th>
+                                <th>Funcionarios</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="empresaList">
+                        {% for empresa in empresas %}
+                            <tr>
+                                <td><a href="empresa/{{empresa.id}}">{{empresa.nome}}</a></td>
+                                <td>{{empresa.endereco}}</td>
+                                <td>{{empresa.telefone}}</td>
+                                <td>{{empresa.quantidade_funcionarios}}</td>
+                                <td><div class="td-actions"><button class="btn btn-primary btn-editar" data-bs-toggle="modal" data-bs-target="#EmpresaModal" data-id="{{ empresa.id }}" data-nome="{{ empresa.nome }}" data-endereco="{{empresa.endereco}}" data-telefone="{{empresa.telefone}}">Editar</button><button class="btn btn-danger btn-excluir" data-bs-toggle="modal" data-bs-target="#ExcluirEmpresaModal" data-id="{{ empresa.id }}">Excluir</button></div></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="text-center" style="justify-content:center; display:flex;">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&nome={{ request.GET.nome }}">Anterior</a>
+                            </li>
+                            {% endif %}
+
+                            {% for page_num in paginator.page_range %}
+                            <li class="page-item{% if page_obj.number == page_num %} active{% endif %}">
+                                <a class="page-link" href="?page={{ page_num }}&nome={{ request.GET.nome }}">{{ page_num }}</a>
+                            </li>
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}&nome={{ request.GET.nome }}">Próximo</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% else %}
+                <p>Não foram encontradas empresas.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+    {%include './partials/form_empresa.html'%}
+    <script src="{% static 'js/gerenciamento.js' %}"></script>
+{% endblock %}

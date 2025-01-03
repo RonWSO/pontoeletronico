@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Empresa{% endblock %}
+{% block head%}
+<link rel="stylesheet" href="{% static 'css/gerenciamento.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        </div id="apresentacao">
+            <h1>Funcionário </h1>
+            <p>Aqui você pode gerenciar funcionários de uma empresa.</p>
+        </div>
+        <div class="row">
+                {% if funcionario %}
+                <div class="col-md-12">
+                    <div style="margin-top:5px;" class="col-md-12 text-end">
+                    <button class="btn btn-primary" id="editarFuncionario" data-bs-toggle="modal" data-id={{funcionario.id}}
+                        data-bs-toggle="modal" 
+                        data-bs-target="#FuncionarioModal" 
+                        data-id="{{ funcionario.id }}"
+                        data-empresa-id ="{{ funcionario.empresa }}" 
+                        data-nome="{{funcionario.nome}}" 
+                        data-email="{{funcionario.email}}" 
+                        data-inicio-expediente="{{funcionario.expediente.inicio_expediente}}" 
+                        data-horario-expediente="{{funcionario.expediente.horas_expediente}}" 
+                        data-tempo-intervalo="{{funcionario.expediente.tempo_intervalo}}" data-bs-target="#funcionarioModal">
+                        Editar Funcionário
+                    </button>
+                    </div>
+                    <div style="margin-top:5px;" class="col-md-12 text-end">
+                        <button class="btn btn-primary" id="adicionarPonto" data-bs-toggle="modal" data-id ={{funcionario.id}} data-bs-target="#pontoModal">
+                            Cadastro de Ponto
+                        </button>
+                    </div>
+                    <h1>{{funcionario.nome}}</h1>
+                    
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th>data</th>
+                                <th>entrada_expediente</th>
+                                <th>saida_expediente</th>
+                                <th>inicio_intervalo</th>
+                                <th>saida_intervalo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pontoList">
+                        {% for ponto in pontos %}
+                            <tr>
+                                <td>{{ponto.data}}</td>
+                                <td>{{ponto.entrada_expediente}}</td>
+                                <td>{{ponto.saida_expediente}}</td>
+                                <td>{{ponto.inicio_intervalo}}</td>
+                                <td>{{ponto.saida_intervalo}}</td>
+                            </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p>Não foram encontrados funcionários ligados a essa empresa.</p>
+                    {% endif %}    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    {%include './partials/form_ponto.html'%}
+{% endblock %}

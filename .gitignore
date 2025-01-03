@@ -1,0 +1,14 @@
+.DS_Store
+
+# Python
+*.pyc
+*.pyo
+__pycache__/
+.pytest_cache/
+.tox/
+env/
+venv/
+
+# IDEs and editors
+.idea/
+.vscode/

@@ -1,0 +1,70 @@
+{% load  static %}
+
+<!-- formulário empresa -->
+<div class="modal fade" id="EmpresaModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formModalLabel">Formulário Empresa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      {% csrf_token %}
+        <form id="formulario_empresa" action="">
+          <input type="hidden" id="id_empresa" name="id_empresa" value="">
+          <div class="alert alert-success" role="alert" style="display: none;">
+            Cadastro realizado com sucesso!
+          </div>
+          <div class="alert alert-danger" role="alert" style="display: none;">
+            <ul>
+                <li></li> </ul>
+          </div>
+          <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome_empresa" placeholder="Digite nome da Empresa" required>
+          </div>
+          <div class="mb-3">
+            <label for="endereco" class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="endereco" name="endereco_empresa" placeholder="Digite seu endereço" required>
+          </div>
+          <div class="mb-3">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input type="text" class="form-control telefone_empresa" id="telefone" name="telefone_empresa" placeholder="Digite seu telefone" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary" form="formulario_empresa" id="btn_salvar_empresa">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="ExcluirEmpresaModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+  <form id="form_exclusao_empresa">
+    <input type="hidden" name="id_exclusao_empresa" value="" required>
+    <div class="alert alert-success" role="alert" style="display: none;">
+      Exclusão realizada com sucesso!
+    </div>
+    <div class="alert alert-danger" role="alert" style="display: none;">
+      <ul>
+          <li></li> </ul>
+    </div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Confirmação de Exclusão</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Tem certeza que deseja excluir esta empresa?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="btn_excluir_empresa">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript" src="{% static 'js/form_empresa.js' %}" defer></script>

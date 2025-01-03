@@ -1,0 +1,108 @@
+{% load static %}
+<!-- Modal de adição de ponto do funcionário -->
+<div class="modal fade" id="pontoModal" tabindex="-1" aria-labelledby="pontoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pontoModalLabel">Adicionar Ponto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% csrf_token %}
+          <form id="form_adicao_ponto">
+            <div class="alert alert-success" role="alert" id="alert-success-ponto" style="display: none;">
+              Ponto Marcado realizada com sucesso!
+            </div>
+            <div class="alert alert-danger" role="alert" id="alert-error-ponto" style="display: none;">
+                <ul>
+                </ul>
+            </div>
+            <input type="hidden" name="id_funcionario" value="" required>
+            <div class="mb-3">
+              <label for="data" class="form-label">Data</label>
+              <input type="date" class="form-control" name="data_ponto" aria-describedby="dataHelp" required>
+              <div id="dataHelp" class="form-text">Data atual será preenchida automaticamente</div>
+            </div>
+            <div class="mb-3">
+              <label for="entradaExpediente" class="form-label">Entrada Expediente</label>
+              <input type="time" class="form-control" name="entrada_expediente" required>
+            </div>
+            <div class="mb-3">
+              <label for="saidaExpediente" class="form-label">Saída Expediente</label>
+              <input type="time" class="form-control" name="saida_expediente" required>
+            </div>
+            <div class="mb-3">
+              <label for="inicioIntervalo" class="form-label">Inicio Intervalo</label>
+              <input type="time" class="form-control" name="inicio_intervalo" required>
+            </div>
+            <div class="mb-3">
+              <label for="saidaIntervalo" class="form-label">Saída Intervalo</label>
+              <input type="time" class="form-control" name="saida_intervalo" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary" id="btn_marcar_ponto">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de adição do funcionário -->
+<div class="modal fade" id="FuncionarioModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formModalLabel">Formulário Funcionário</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+      {% csrf_token %}
+        <form id="formulario_funcionario" action="">
+            <!-- Campo oculto para o ID do funcionário -->
+            <input type="hidden" id="id_funcionario" name="id_funcionario" value="">
+            <input type="hidden" id="id_empresa" name="id_empresa" value="">
+
+            <div class="alert alert-success" role="alert" id="alert-success-funcionario" style="display: none;">
+            Cadastro realizado com sucesso!
+            </div>
+            <div class="alert alert-danger" role="alert" id="alert-error-funcionario" style="display: none;">
+            <ul>
+            </ul>
+            </div>
+            <div class="mb-3">
+            <label for="nome_funcionario" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="nome_funcionario" name="nome_funcionario" placeholder="Digite o nome do Funcionário" required>
+            </div>
+
+            <div class="mb-3">
+            <label for="email_funcionario" class="form-label">Email</label>
+            <input type="email" class="form-control email" id="email_funcionario" name="email_funcionario" placeholder="Digite o email do Funcionário" required>
+            </div>
+
+            <div class="mb-3">
+            <label for="inicio_expediente" class="form-label">Início do Expediente</label>
+            <input type="time" class="form-control" id="inicio_expediente" name="inicio_expediente" placeholder="Digite o horário de início" required>
+            </div>
+
+            <div class="mb-3">
+            <label for="horas_expediente" class="form-label">Horas de Trabalho</label>
+            <input type="number" class="form-control" id="horas_expediente" name="horas_expediente" placeholder="Horas de expediente" required>
+            </div>
+
+            <div class="mb-3">
+            <label for="tempo_intervalo" class="form-label">Tempo de Intervalo</label>
+            <input type="number" class="form-control" id="tempo_intervalo" name="tempo_intervalo" placeholder="Tempo de intervalo em minutos" required>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary" form="formulario_funcionario" id="btn_salvar_funcionario">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="{% static 'js/form_ponto.js' %}" defer></script>

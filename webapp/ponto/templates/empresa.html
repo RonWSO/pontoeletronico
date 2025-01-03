@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Empresa{% endblock %}
+{% block head%}
+<link rel="stylesheet" href="{% static 'css/gerenciamento.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        </div id="apresentacao">
+            <h1>Empresa </h1>
+            <p>Aqui você pode cadastrar e gerenciar funcionários de uma empresa.</p>
+        </div>
+        <div class="row">
+                <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 text-end">
+                        <a href="ponto">
+                            <button class="btn btn-success">
+                                Visualizar Batidas 
+                            </button>
+                        </a>
+                        <button class="btn btn-primary" id="adicionarFuncionario" data-bs-toggle="modal" data-id ={{empresa.id}} data-bs-target="#FuncionarioModal">
+                            Cadastro de Funcionário
+                        </button>
+                    </div>
+                </div>
+                <div style="margin-top:5px;">
+                    <form method="get" >
+                        <div class="input-group mb-3">
+                            <input type="text" id="searchInput" name="nome" class="form-control" placeholder="Pesquisar por nome de funcionario">
+                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                        </div>
+                    </form>
+                </div>
+                    <h1>{{empresa.nome}}</h1>
+                    {% if funcionarios %}
+                        <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Funções</th>
+                            </tr>
+                        </thead>
+                        <tbody id="funcionarioList">
+                        {% for funcionario in funcionarios %}
+                            <tr>
+                                <td><a href="/gerenciamento/empresa/funcionario/{{funcionario.id}}">{{funcionario.nome}}</a></td>
+                                <td>{{funcionario.email}}</td>
+                                <td><div class="td-actions">
+                                    <button class="btn btn-success btn-ponto"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#pontoModal" 
+                                    data-id="{{ funcionario.id }}">Marcar Ponto
+                                    </button>
+
+                                    <button class="btn btn-success btn-relatório"
+                                        data-id="{{ funcionario.id }}">Gerar Relatório
+                                    </button>
+
+                                    <button class="btn btn-primary btn-editar" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#FuncionarioModal" 
+                                    data-id="{{ funcionario.id }}"
+                                    data-empresa-id ="{{ empresa.id }}" 
+                                    data-nome="{{funcionario.nome}}" 
+                                    data-email="{{funcionario.email}}" 
+                                    data-inicio-expediente="{{funcionario.expediente.inicio_expediente}}" 
+                                    data-horario-expediente="{{funcionario.expediente.horas_expediente}}" 
+                                    data-tempo-intervalo="{{funcionario.expediente.tempo_intervalo}}">Editar</button>
+
+                                    <button class="btn btn-danger btn-excluir"
+                                     data-bs-toggle="modal"
+                                     data-bs-target="#ExcluirFuncionarioModal" 
+                                     data-id="{{ funcionario.id }}">Excluir</button>
+                                    </div></td>
+                            </tr>
+                        {% endfor %}
+                        {% else %}
+                        <p>Não foram encontrados funcionários ligados a essa empresa.</p>
+                    {% endif %}
+                    </tbody>
+                </table>
+                {% if funcionarios %}
+                <div class="text-center" style="justify-content:center; display:flex;">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}&nome={{ request.GET.nome }}">Anterior</a>
+                            </li>
+                            {% endif %}
+
+                            {% for page_num in paginator.page_range %}
+                            <li class="page-item{% if page_obj.number == page_num %} active{% endif %}">
+                                <a class="page-link" href="?page={{ page_num }}&nome={{ request.GET.nome }}">{{ page_num }}</a>
+                            </li>
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}&nome={{ request.GET.nome }}">Próximo</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+    {%include './partials/form_funcionario.html'%}
+{% endblock %}

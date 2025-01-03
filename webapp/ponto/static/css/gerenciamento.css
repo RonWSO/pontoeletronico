@@ -1,0 +1,34 @@
+table{
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #444444;
+    text-align: center;
+    border-radius: 10px;
+}
+td,th{
+    border: 1px solid #ddd;
+    color:#dcbb8a;
+    align-items: center;
+}
+td>a{
+    align-items: center;
+    color:#dcbb8a
+}
+td>a:hover{
+    color:#B07A28;
+}
+td>button{
+    margin:5px;
+}
+td:hover{
+    background-color: #707070;
+}
+
+.input-group .btn {
+    height: 100%;
+}
+.td-actions {
+    display: flex;
+    justify-content: space-around;
+}
+

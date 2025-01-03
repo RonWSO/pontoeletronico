@@ -1,0 +1,39 @@
+{%load static%}
+<!-- Sidebar -->
+<div>
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+        <div class="position-sticky">
+            <h5 class="sidebar-title">Menu</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <span class="fas fa-home"></span> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#empresasSubmenu" role="button" aria-expanded="false" aria-controls="empresasSubmenu">
+                        <span class="fas fa-briefcase"></span> Empresas
+                    </a>
+                    <div class="collapse" id="empresasSubmenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'gerenciamento' %}">Lista de Empresas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#EmpresaModal" href="#">Cadastro de Empresa</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link" style="color: inherit; text-decoration: none;">
+                            <span class="fas fa-sign-out-alt"></span> Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,28 @@
+include:
+  - ../db/docker-compose.yaml
+
+services:
+  app:
+    build: .
+    env_file:
+      - .env
+    links:
+      - db:db
+    ports:
+      - "80:8000"
+    restart: always
+    volumes:
+      - ./:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command:  >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py shell < utils/create_superuser.py &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+    networks:
+      - sistemadepontoeletronico
+networks:
+  sistemadepontoeletronico:

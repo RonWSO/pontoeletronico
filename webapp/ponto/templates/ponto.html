@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Batidas{% endblock %}
+{% block head%}
+<link rel="stylesheet" href="{% static 'css/gerenciamento.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+
+    <div class="col-md-8">
+        <h1>Pontos dos Funcionários</h1>
+    </div>
+    <div style="margin-bottom:3px;">
+        <a href="/gerenciamento/empresa/{{empresa.id}}">
+            <button class="btn btn-success">
+                Voltar
+            </button>
+        </a>
+    </div>
+    
+    <form method="get" class="mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="nome" placeholder="Filtrar por nome do funcionário" value="{{ request.GET.nome }}">
+            </div>
+            <div class="col-md-3">
+                <input type="date" class="form-control" name="data_inicio" placeholder="Data início" value="{{ request.GET.data_inicio }}">
+            </div>
+            <div class="col-md-3">
+                <input type="date" class="form-control" name="data_fim" placeholder="Data fim" value="{{ request.GET.data_fim }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </div>
+    </form>
+    {% if pontos %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Funcionário</th>
+                <th>Data</th>
+                <th>Entrada Expediente</th>
+                <th>Saída Expediente</th>
+                <th>Início Intervalo</th>
+                <th>Saída Intervalo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ponto in pontos %}
+            <tr>
+                <td>{{ ponto.funcionario }}</td>
+                <td>{{ ponto.data }}</td>
+                <td>{{ ponto.entrada_expediente }}</td>
+                <td>{{ ponto.saida_expediente }}</td>
+                <td>{{ ponto.inicio_intervalo }}</td>
+                <td>{{ ponto.saida_intervalo }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center" style="justify-content:center; display:flex;">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?{% if nome %}nome={{ nome }}&{% endif %}page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                <li class="page-item {% if page_obj.number == i %}active{% endif %}"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?{% if nome %}nome={{ nome }}&{% endif %}page={{ page_obj.next_page_number }}">Próximo</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% else %}
+    <p>Nenhum ponto encontrado.</p>
+    {% endif %}
+</div>
+{% endblock %}
